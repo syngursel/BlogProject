@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+	<f:view>
+		<h:form>
+
+			<p:menubar>
+				<p:submenu label="Blog">
+					<p:menuitem value="Bloglarım" url="BlogOlusturma.jsf" />
+					<p:menuitem value="Bütün Bloglar" url="ButunBloglar.jsf" />
+				</p:submenu>
+				<p:menuitem value="Çıkış Yap" action="#{newBlogBean.logout()}"
+					icon="ui-icon-close" />
+			</p:menubar>
+
+			<p:inputTextarea style="width:100%"
+				value="#{newBlogBean.yorum.yorumText}"
+				rendered="#{newBlogBean.goster}" />
+
+			<h:commandButton action="#{newBlogBean.yorumKaydet()}"
+				value="Yorum Yap" rendered="#{newBlogBean.goster}" />
+
+			<p:dataScroller value="#{newBlogBean.blogList}" var="cls"
+				chunkSize="5">
+				<f:facet name="header">
+            		Bütün Bloglar
+        		</f:facet>
+
+				<f:facet name="loader">
+					<p:commandButton type="button" value="Görüntüle"
+						icon="ui-icon-circle-triangle-s" />
+				</f:facet>
+
+				<h:panelGrid columns="2" style="width:100%"
+					columnClasses="logo,detail">
+
+					<p:outputPanel>
+						<h:panelGrid columns="1" cellpadding="5" style="width:100%">
+
+							<h:outputText value="#{cls.kullanici.ad}"
+								style="font-weight: bold" />
+
+							<h:outputText value="#{cls.text}" />
+							<h:outputText value="#{cls.blogDate}" />
+
+							<h:commandButton action="#{newBlogBean.yorumGosterButon()}"
+								value="#{newBlogBean.goster ? 'Yorumları Gizle' : 'Yorumları Göster' }">
+								<f:setPropertyActionListener target="#{newBlogBean.blog}"
+									value="#{cls}" />
+							</h:commandButton>
+
+							<!-- *********************************************************************** -->
+							<p:dataScroller value="#{newBlogBean.yorumList}" var="yrm"
+								chunkSize="5" rendered="#{newBlogBean.goster}">
+
+								<f:facet name="header">
+            						Yorumlar
+        						</f:facet>
+
+								<f:facet name="loader">
+									<p:commandButton type="button" value="Görüntüle"
+										icon="ui-icon-circle-triangle-s" />
+								</f:facet>
+
+								<h:panelGrid columns="2" style="width:100%"
+									columnClasses="logo,detail">
+
+									<p:outputPanel>
+										<h:panelGrid columns="1" cellpadding="5" style="width:100%">
+
+											<h:outputText value="#{yrm.kullanici.ad}"
+												style="font-weight: bold" />
+
+											<h:outputText value="#{yrm.yorumText}" />
+											<h:outputText value="#{yrm.yorumTime}" />
+											<h:commandLink action="#{newBlogBean.yorumSil()}" value="Sil">
+												<f:setPropertyActionListener target="#{newBlogBean.yorum}"
+													value="#{yrm}" />
+											</h:commandLink>
+											<hr style="width: 100%" />
+										</h:panelGrid>
+									</p:outputPanel>
+								</h:panelGrid>
+							</p:dataScroller>
+							<!-- *********************************************************************** -->
+							<hr style="width: 100%" />
+						</h:panelGrid>
+					</p:outputPanel>
+				</h:panelGrid>
+			</p:dataScroller>
+
+		</h:form>
+	</f:view>
+</body>
+</html>

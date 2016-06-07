@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+	<f:view>
+		<h:form>
+
+			<p:menubar>
+				<p:submenu label="Blog">
+					<p:menuitem value="Bloglarım" url="BlogOlusturma.jsf" />
+					<p:menuitem value="Bütün Bloglar" url="ButunBloglar.jsf" />
+				</p:submenu>
+				<p:menuitem value="Çıkış Yap" action="#{newBlogBean.logout()}"
+					icon="ui-icon-close" />
+			</p:menubar>
+
+
+			<p:editor id="editor" widgetVar="editorWidget"
+				value="#{newBlogBean.blog.text}" width="600" />
+
+			<h:panelGrid columns="2" style="margin-top: 10px">
+				<p:commandButton value="Kaydet" action="#{newBlogBean.blogKaydet()}" 
+					icon="ui-icon-disk" />
+
+				<p:commandButton value="Temizle" type="button"
+					onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
+			</h:panelGrid>
+
+
+
+			<p:dataScroller value="#{newBlogBean.kullaniciBlogList}" var="cls"
+				id="myBlogs" chunkSize="5">
+				<f:facet name="header">
+           			 Bloglarım
+        		</f:facet>
+
+				<f:facet name="loader">
+					<p:commandButton type="button" value="Görüntüle"
+						icon="ui-icon-circle-triangle-s" />
+				</f:facet>
+
+				<h:panelGrid columns="2" style="width:100%"
+					columnClasses="logo,detail">
+
+					<p:outputPanel>
+						<h:panelGrid columns="1" cellpadding="5" style="width:100%">
+							<h:outputText value="#{cls.kullanici.ad}"
+								style="font-weight: bold" />
+
+							<h:outputText value="#{cls.text}" />
+
+							<h:outputText value="#{cls.blogDate}" />
+
+							<h:commandLink action="#{newBlogBean.blogSil()}" value="Sil">
+								<f:setPropertyActionListener target="#{newBlogBean.blog}"
+									value="#{cls}" />
+							</h:commandLink>
+							<h:commandLink value="Duzenle">
+								<f:setPropertyActionListener target="#{newBlogBean.blog}"
+									value="#{cls}" />
+							</h:commandLink>
+
+							<hr style="width: 100%" />
+						</h:panelGrid>
+					</p:outputPanel>
+				</h:panelGrid>
+			</p:dataScroller>
+
+		</h:form>
+	</f:view>
+</body>
+</html>

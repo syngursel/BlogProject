@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+	<f:view>
+		<h:form>
+			<h:panelGrid columns="2">
+    	Ad: <h:inputText value="#{newBlogBean.kayit.ad}" required="true"
+					requiredMessage="Ad alanı boş olamaz!" />
+    	Soyad: <h:inputText value="#{newBlogBean.kayit.soyad}" required="true"
+					requiredMessage="Soyad alanı boş olamaz!" />
+    	Yaş: <h:inputText value="#{newBlogBean.kayit.yas}" />
+    	E-mail: <h:inputText value="#{newBlogBean.kayit.e_mail}"
+					required="true" requiredMessage="E-mail boş olamaz!" />
+    	Şifre: <h:inputSecret value="#{newBlogBean.kayit.sifre}"
+					required="true" requiredMessage="Şifre alanı boş olamaz!" />
+				<h:commandButton action="#{newBlogBean.kaydet()}" value="Kayıt Ol" />
+				<h:commandButton action="KullaniciGiris" value="Geri Dön" />
+			</h:panelGrid>
+		</h:form>
+	</f:view>
+</body>
+</html>
